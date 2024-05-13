@@ -3,15 +3,38 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 
+//componentes de material
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatMenuModule} from '@angular/material/menu';
+
+//accedemos a todas las rutas del proyecto
+import { AppRoutingModule } from 'src/app/app-routing.module';
 
 
 @NgModule({
   declarations: [
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+   
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MatIconModule,
+    MatButtonModule,
+    MatToolbarModule,
+    AppRoutingModule,
+    MatMenuModule
+  ],
+  exports:[  //metadato de exportacion
+    NavbarComponent,
+    FooterComponent,
+    MatIconModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatMenuModule
+
   ]
 })
 export class SharedModule { }
