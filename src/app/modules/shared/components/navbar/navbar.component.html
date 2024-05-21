@@ -9,17 +9,24 @@
     <!--Menu desplegable-->
     <button mat-button [matMenuTriggerFor]="producto">producto</button>
     <mat-menu #producto="matMenu">
-        <button mat-menu-item routerLink="producto">Productos</button>
-        <button mat-menu-item routerLink="partes-de-arriba">Partes de arriba</button>
-        <button mat-menu-item routerLink="partes-de-abajo">Partes de abajo</button>
-        <button mat-menu-item routerLink="contacto">Contacto</button>
+        <button mat-menu-item routerLink="/producto">Productos</button>
+        <button mat-menu-item routerLink="/partes-de-arriba">Partes de arriba</button>
+        <button mat-menu-item routerLink="/partes-de-abajo">Partes de abajo</button>
+        <button mat-menu-item routerLink="/contacto">Contacto</button>
     </mat-menu>
 
     <span class="example-spacer"></span>
+
+<!--Inicio de sesion y el registro del nuevo usuario-->
+    <button mat-button [matMenuTriggerFor]="usuario"><mat-icon>person</mat-icon></button>
+    <mat-menu #usuario="matMenu">
+        <button mat-menu-item routerLink="/registro">Registrarse</button>
+        <button mat-menu-item routerLink="/inicio-sesion">Iniciar sesion</button>
+    </mat-menu>
+
+    <!--carrito-->
     <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
         <mat-icon>favorite</mat-icon>
     </button>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-        <mat-icon>share</mat-icon>
-    </button>
+
 </mat-toolbar>
