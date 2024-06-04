@@ -7,7 +7,7 @@
 
         <mat-form-field appearance="fill">
             <mat-label>Ingrese su Email:</mat-label>
-            <input [(ngModel)]="" matInput placeholder="Ej: pepperez2022@gmail.com" required>
+            <input [(ngModel)]="usuarios.email" matInput placeholder="Ej: pepperez2022@gmail.com" required>
             <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
             <mat-hint>Hint</mat-hint>
         </mat-form-field>
@@ -16,7 +16,7 @@
         <!--Nombre de usuario-->
         <mat-form-field appearance="fill">
             <mat-label>Ingrese un nombre de usuario:</mat-label>
-            <input [(ngModel)]="" matInput placeholder="Ej: Pepe2022" required||>
+            <input [(ngModel)]="usuarios.nombre" matInput placeholder="Ej: Pepe2022" required||>
             <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
             <mat-hint>Hint</mat-hint>
         </mat-form-field>
@@ -24,7 +24,7 @@
         <!--Contraseña-->
         <mat-form-field>
             <mat-label>Ingrese su contraseña</mat-label>
-            <input [(ngModel)]="" matInput [type]="hide ? 'password' : 'text'" #input minlength="6" required>
+            <input [(ngModel)]="usuarios.password" matInput [type]="hide ? 'password' : 'text'" #input minlength="6" required>
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                 [attr.aria-pressed]="hide">
                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -33,6 +33,6 @@
             <mat-hint align="start">Minimo:6/{{input.value.length}}</mat-hint>
         </mat-form-field>
 
-        <button class="boton" mat-raised-button color="primary">Iniciar Sesion</button>
+        <button class="boton" mat-raised-button color="primary" (click)="comparar()">Iniciar Sesion</button>
     </div>
 </div>
