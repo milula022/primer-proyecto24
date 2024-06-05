@@ -52,14 +52,8 @@ export class IniciosesionComponent {
   //creamos coleccion de usuarios, tipo 'usuario' para arrays
   coleccionUsuarios: Usuario[] = [];
 
-  comparar() {
-    //  const users = {
-    // uid: this.iniciar.uid,
-    //  nombre: this.iniciar.nombre,
-    //  apellido: this.iniciar.apellido,
-    //  email: this.iniciar.email,
-    //  password: this.iniciar.password,
-    //  rol: this.iniciar.rol
+  compara() {
+
     const credenciales = {
       uid: this.usuarios.uid,
       nombre: this.usuarios.nombre,
@@ -68,9 +62,12 @@ export class IniciosesionComponent {
       password: this.usuarios.password,
       rol: this.usuarios.rol
     }
-
+    //repetitiva para recorrer la coleccion de usuarios locales(datos)
     for (let i = 0; i <= this.datos.length; i++) {
-      if (this.datos.length !== (credenciales.uid && credenciales.nombre && credenciales.apellido && credenciales.email && credenciales.password && credenciales.rol)) {
+      //usuario local corresponde a esa posicion en especifico 
+      const userLocal = this.datos[i]
+      if
+        (userLocal.nombre === credenciales.nombre && userLocal.apellido === credenciales.apellido && userLocal.email === credenciales.email && userLocal.password === credenciales.password) {
         alert("inicio sesidada")
         break
       }
@@ -80,8 +77,21 @@ export class IniciosesionComponent {
       }
     }
 
-
   }
+    //funcion para vaciar los input
+    limpiarInputs(){
+      const inputs={
+        //en constante inputs llamamos a los atributos y los inicializamos como vacios (string = '', number = 0)
+        uid: this.usuarios.uid = '',
+        nombre: this.usuarios.nombre = '',
+        apellido: this.usuarios.apellido = '',
+        email: this.usuarios.email = '',
+        password: this.usuarios.password= '',
+        rol: this.usuarios.rol= ''
+  
+      }   
+ 
+    }
 
 }
 
