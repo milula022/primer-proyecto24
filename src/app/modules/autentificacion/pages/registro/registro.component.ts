@@ -44,11 +44,26 @@ constructor(
       password: this.usuarios.password,
       rol: this.usuarios.rol
     }*/
+
+    //registro con servicio de auth
     const credenciales = {
       email:this.usuarios.email,
       password:this.usuarios.password
     }
 
+    const res =this.servicioAuth.registrar(credenciales.email,credenciales.password)
+    .then(res =>{  //el metodo .then es una promesa que devuelve el mismo valor si todo sale bien
+
+      alert("Se pudo registrar con exito")
+
+      //elmetodo navigate nos redirecciona a otra vista
+      this.servicioRutas.navigate(['/incio'])
+    })
+    //el metodo catch captura una falla y la vuelve un error cuando la promesa salga mal
+    .catch(error=>{
+      alert("hubo un error al registrar un nuevo usuario :( \n"+error)
+    }) 
+   
 
     //enviamos la nueva informacion como un NUEVO OBJETO a la coleccion d usuarios
     //this.coleccionUsuarios.push(credenciales)

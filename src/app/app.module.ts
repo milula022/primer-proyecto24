@@ -28,7 +28,7 @@ import{AngularFireStorageModule} from '@angular/fire/compat/storage';//trabaja c
     SharedModule, //importamos el modulo shared
     AngularFireModule.initializeApp(environment.firebaseConfig), //inicializar firebase dentro del proyecto 
     AngularFireAuthModule,
-    AngularFireStorageModule
+    AngularFireStorageModule 
    
   ],
   providers: [],
