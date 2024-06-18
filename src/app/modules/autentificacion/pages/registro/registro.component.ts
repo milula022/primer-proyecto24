@@ -4,6 +4,8 @@ import { Usuario } from 'src/app/models/usuario';
 import { AuthService } from '../../services/auth.service';
 //importamos componente de rutas de angular
 import { Router } from '@angular/router';
+//importamo servicio de firestore
+import { FirestoreService } from 'src/app/modules/shared/services/firestore.service';
 
 @Component({
   selector: 'app-registro',
@@ -31,10 +33,11 @@ export class RegistroComponent {
   //**********************************************************fin */
 constructor(
   public servicioAuth:AuthService,
-  public servicioRutas:Router
+  public servicioRutas:Router,
+  public servicioFirestore: FirestoreService
 ){}
   //funcion para el registro de nuevos usuarios
-  registrar() {
+  async registrar() {
     //constante credenciales va a resguardar la informacion que ingrese el usuario
    /* const credenciales = {
       uid: this.usuarios.uid,
@@ -75,6 +78,17 @@ constructor(
     //mostramos credenciales por consola
     //console.log(credenciales)
     //console.log(this.coleccionUsuarios)
+  }
+
+  async guardarUsuario(){
+   this.servicioFirestore.agregarUsuario(this.usuarios,this.usuarios.uid)
+   .then(res =>{
+    console.log(this.usuarios);
+
+   })
+   .catch(err =>{
+    console.log('error =>', err)
+   })
   }
 
   //funcion para vaciar los input
