@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Ropa } from 'src/app/models/ropa';
+ import { Ropa } from 'src/app/models/ropa';
 
 @Component({
   selector: 'app-card',
@@ -8,7 +8,7 @@ import { Ropa } from 'src/app/models/ropa';
 })
 export class CardComponent {
     //propiedad publica-tipo array
-    public info: Ropa[];
+     public info: Ropa[];
     constructor() {
       this.info = [
         {

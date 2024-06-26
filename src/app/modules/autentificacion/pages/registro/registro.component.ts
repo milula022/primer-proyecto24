@@ -66,6 +66,12 @@ constructor(
     .catch(error=>{
       alert("hubo un error al registrar un nuevo usuario :( \n"+error)
     }) 
+    const uid = await this.servicioAuth.obtenerUid();
+
+    this.usuarios.uid=uid;
+
+    this.guardarUsuario();
+
    
 
     //enviamos la nueva informacion como un NUEVO OBJETO a la coleccion d usuarios
@@ -89,6 +95,8 @@ constructor(
    .catch(err =>{
     console.log('error =>', err)
    })
+   const uid=await this.servicioAuth.obtenerUid();
+
   }
 
   //funcion para vaciar los input
