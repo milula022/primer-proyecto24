@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 //servicio en la nube de autentificacion de firebase
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 
+import { FirestoreService } from '../../shared/services/firestore.service';
+
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +13,9 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 export class AuthService {
   //referenciar auth  de firebase en el servicio
 
-  constructor(public auth: AngularFireAuth) {
-  }
+  constructor(
+    private auth: AngularFireAuth,
+    private serviocioFirestore: AngularFirestore) { }
 
   //funcion para registro
   registrar(email: string, password: string) {
@@ -33,12 +38,16 @@ export class AuthService {
   async obtenerUid() {
     //nos  va a generar una promesa y la constante la va a capturar
     const user = await this.auth.currentUser;
-/*Si el usuario no respeta la estructura de la interfaz /
-si tuvo problemas para el registrp -> ej: mal internet */
+    /*Si el usuario no respeta la estructura de la interfaz /
+    si tuvo problemas para el registrp -> ej: mal internet */
     if (user == null) {
       return null;
     } else {
       return user.uid;
     }
   }
+
+  obtenerUsuario(email: string) {
+    return this.serviocioFirestore.collection('usuarios', ref=> ref.where('email','==',email)).get().toPromise();
+   }
 }
