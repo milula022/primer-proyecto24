@@ -3,6 +3,9 @@ import { Usuario } from 'src/app/models/usuario';
 import { AuthService } from '../../services/auth.service';
 import { FirestoreService } from 'src/app/modules/shared/services/firestore.service';
 import { Router } from '@angular/router';
+import * as CryptoJS from 'crypto-js';
+//paqueteria de alertas personalizadas
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-iniciosesion',
@@ -48,7 +51,7 @@ export class IniciosesionComponent {
     public servicioAuth: AuthService,
     public servicioFirestore: FirestoreService,
     public servicioRutas: Router
-  ){}
+  ) { }
 
   usuarios: Usuario = {
     uid: '',//inicializamos con comilla simple porque es de STRING
@@ -87,38 +90,86 @@ export class IniciosesionComponent {
     //   }
     // }
 
-    const credenciales ={
-      email:this.usuarios.email,
-      password:this.usuarios.password
+    const credenciales = {
+      email: this.usuarios.email,
+      password: this.usuarios.password
     }
 
-    const res = await this.servicioAuth.IniciarSesion(credenciales.email,credenciales.password)
-    .then(res =>{
-      alert('¡ser pudo ingresar con exito!');
-      this.servicioRutas.navigate(['/inicio']);
-    })
-    .catch(err => {
-      alert('hubo un problema al iniciar sesion' +err)
-    })
+    try {
+      //obtenemos usuario de la base de datos
+      const usuarioBD = await this.servicioAuth.obtenerUsuario(credenciales.email)
 
+    //condicional verifica que ese usuario de BD existiera o que sea igual al de nuestra coleccion 
+      if (!usuarioBD || usuarioBD.empty) {
+        Swal.fire({
+          title: "Oh no:( !",
+          text: "Correo electronico no registrado!",
+          icon: "success"
+        });
+        this.limpiarInputs();
+        return;
+      }
+    //vincula al primer documento de la coleccion "usuarios" que se obtiene de la BD
+      const usuarioDoc = usuarioBD.docs[0];
 
-    this.limpiarInputs();
+    //extrae los datos del documento de forma de objetos y se especifica que va a ser del tipo "usuario"
+    //(se refiere a la interfaz Usuario de nuestros modelos) 
+      const usuarioData = usuarioDoc.data() as Usuario;
+
+    //encripta la contraseña que el usuario envia mediante "Iniciar Sesion" 
+      const hashedPassword = CryptoJS.SHA256(credenciales.password).toString();
+
+    //condicional que compara la contraseña que acabamos de encriptar y que el usuario envio con la que recebimos del "usuarioData"
+      if (hashedPassword !== usuarioData.password) {
+        Swal.fire({
+          title: "Oh no:( !",
+          text: "Su contraseña es incorrecta!",
+          icon: "success"
+        });
+        this.usuarios.password = '';
+        return;
+      }
+      const res = await this.servicioAuth.IniciarSesion(credenciales.email, credenciales.password)
+        .then(res => {
+          Swal.fire({
+            title: "Good job!",
+            text: "Pudo ingresar con exito!",
+            icon: "success"
+          });
+          this.servicioRutas.navigate(['/inicio']);
+        })
+        .catch(err => {
+          Swal.fire({
+            title: "Oh no:( !",
+            text: "Hubo un problema al iniciar sesion!" + err,
+            icon: "success"
+          });
+          this.limpiarInputs();
+
+        })
+
+    } catch (error) {
+      this.limpiarInputs();
+    }
+
+    // this.limpiarInputs();
 
   }
-    //funcion para vaciar los input
-    limpiarInputs(){
-      const inputs={
-        //en constante inputs llamamos a los atributos y los inicializamos como vacios (string = '', number = 0)
-        uid: this.usuarios.uid = '',
-        nombre: this.usuarios.nombre = '',
-        apellido: this.usuarios.apellido = '',
-        email: this.usuarios.email = '',
-        password: this.usuarios.password= '',
-        rol: this.usuarios.rol= ''
-  
-      }   
- 
+
+  //funcion para vaciar los input
+  limpiarInputs() {
+    const inputs = {
+      //en constante inputs llamamos a los atributos y los inicializamos como vacios (string = '', number = 0)
+      uid: this.usuarios.uid = '',
+      nombre: this.usuarios.nombre = '',
+      apellido: this.usuarios.apellido = '',
+      email: this.usuarios.email = '',
+      password: this.usuarios.password = '',
+      rol: this.usuarios.rol = ''
+
     }
+
+  }
 
 }
 
