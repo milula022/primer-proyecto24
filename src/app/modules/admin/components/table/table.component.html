@@ -1,3 +1,4 @@
+<!--Tabla producto-->
 <table class="table">
     <thead>
         <tr>
@@ -23,7 +24,7 @@
             <td>{{product.precio}}</td>
             <td>{{product.descripcion}}</td>
             <td>{{product.categoria}}</td>
-          
+
             <!--Acciones-->
             <td>
                 <button id="btn-edit" title="Editar" type="button" class="btn btn-outline-warning">
@@ -39,3 +40,66 @@
         </tr>
     </tbody>
 </table>
+
+<!-- Button de agregar nuevos productos -->
+<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#agregarProducto">
+    Agregar un nuevo producto
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="agregarProducto" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!--titulo del modal-->
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Ingrese un nuevo producto</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <!--cuerpo del modal(directiva vinculada con el formulario que definimos desde el ts)-->
+            <div [formGroup]="producto" class="modal-body">
+
+                <div class="mb-3">
+                    <label class="form-label">Ingrese el nombre del producto: </label>
+                    <input class="form-control" type="text" formControlName="nombre" placeholder="Ej.:">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Ingrese el precio del producto: </label>
+                    <input class="form-control" type="number" formControlName="precio" placeholder="Ej.:">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Ingrese una descripcion: </label>
+                    <input class="form-control" type="text" formControlName="descripcion" placeholder="Ej.:">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Ingrese imagen del producto: </label>
+                    <input class="form-control" type="text" formControlName="imagen" placeholder="Ej.:">
+                </div>
+
+
+                <div class="mb-3">
+                    <label class="form-label">Ingrese texto alternativo de imagen </label>
+                    <input class="form-control" type="text" formControlName="alt" placeholder="Ej.:">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Selecciona una categoria </label>
+                    <select class="form-control" formControlName="categoria" class="form-select">
+                        <option selected>Elija una opcion</option>
+                        <option value="partes-de-abajo">Partes de arriba</option>
+                        <option value="partes-de-arriba">Partes de abajo</option>
+                    </select>
+
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" (click)="agregarProducto()" data-bs-dismiss="modal">Guardar</button>
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+
+            </div>
+        </div>
+    </div>
+</div>
